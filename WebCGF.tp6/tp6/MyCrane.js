@@ -10,7 +10,7 @@ class MyCrane extends CGFobject
 	{
 		super(scene);
 		this.coveredCylinder = new MyCoveredCylinder(this.scene, 30, 1);
-		this.cubeQuad = new MyUnitCubeQuad(this.scene);
+		this.cubeQuad = new MyUnitCubeQuad(this.scene, 0, 1, 0, 8);
 		this.mechanicalArm = new MyMechanicalArm(this.scene);
 		this.rotationAngle = 0;
 		this.attached = false;
@@ -29,7 +29,7 @@ class MyCrane extends CGFobject
 		this.craneAppearance.setDiffuse(0.6,0.6,0.6,1);
 		this.craneAppearance.setSpecular(0.5,0.5,0.5,1);
 		this.craneAppearance.setShininess(150);
-		this.craneAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+		this.craneAppearance.setTextureWrap('REPEAT', 'REPEAT');
 		this.craneAppearance.loadTexture("../resources/images/crane.png");
 	};
 

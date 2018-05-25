@@ -10,9 +10,9 @@ class MyVehicleBody extends CGFobject
 	{
 		super(scene);
 
-		this.bottom = new MyUnitCubeQuad(this.scene);
-		this.top = new MyTrapezoid(this.scene, true);
-		this.end = new MyTrapezoid(this.scene);
+		this.bottom = new MyUnitCubeQuad(this.scene,0,6,0,2);
+		this.top = new MyTrapezoid(this.scene, true, 0, 2, 0, 4);
+		this.end = new MyTrapezoid(this.scene, false, 0, 2, 0, 4);
 		this.rearViewMirror = new MyRearViewMirror(this.scene);
 		this.headLights = new MyLamp(this.scene,12,12);  //lights insides headlights
 		this.frontWheels = new MyWheel(this.scene);

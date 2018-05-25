@@ -11,7 +11,6 @@ class MyUnitCubeQuad extends CGFobject
 	{
 		super(scene);
 		this.quad = new MyQuad(this.scene, minS || 0, maxS || 1, minT || 0, maxT || 1);
-		this.quad.initBuffers();
 		this.deg2rad = Math.PI/180.0;
 	};
 

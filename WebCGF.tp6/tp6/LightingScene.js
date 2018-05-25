@@ -317,7 +317,7 @@ class LightingScene extends CGFscene
 		wrapAppearance.setDiffuse(0.5,0.5,0.5,1);
 		wrapAppearance.setSpecular(0.5,0.5,0.5,1);
 		wrapAppearance.setShininess(150);
-		wrapAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+		wrapAppearance.setTextureWrap('REPEAT', 'REPEAT');
 		wrapAppearance.loadTexture("../resources/images/carWrap"+numWrap+".png");
 		Appearance.wrap = wrapAppearance;
 

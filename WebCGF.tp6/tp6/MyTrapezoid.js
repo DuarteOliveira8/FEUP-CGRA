@@ -6,11 +6,12 @@
 
 class MyTrapezoid extends CGFobject
 {
-	constructor(scene, windows) 
+	constructor(scene, windows, minS, maxS, minT, maxT) 
 	{
 		super(scene);
 
-		this.quad = new MyQuad(this.scene);
+		this.quad = new MyQuad(this.scene, minS || 0, maxS || 1, minT || 0, maxT || 1);
+        this.sideQuad = new MyQuad(this.scene);
 		this.trapezium = new MyTrapezium(this.scene);
         this.windows = windows || false;
 
@@ -41,7 +42,7 @@ class MyTrapezoid extends CGFobject
             this.scene.scale(1,Math.sqrt(1+Math.pow(0.2,2)),1);
             if (this.windows)
                 this.scene.vehicleAppearances[this.scene.vehicleAppearanceList[this.scene.currVehicleAppearance]].frontWindow.apply();
-            this.quad.display();
+            this.sideQuad.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
@@ -51,7 +52,7 @@ class MyTrapezoid extends CGFobject
             this.scene.scale(1,Math.sqrt(1+Math.pow(0.2,2)),1);
             if (this.windows)
                 this.scene.vehicleAppearances[this.scene.vehicleAppearanceList[this.scene.currVehicleAppearance]].backWindow.apply();
-            this.quad.display();
+            this.sideQuad.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
