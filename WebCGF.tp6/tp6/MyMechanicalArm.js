@@ -29,6 +29,7 @@ class MyMechanicalArm extends CGFobject
         this.scene.pushMatrix();
 			this.scene.scale(0.8,0.7,0.7);
 			this.scene.translate(0.5,0,0);
+			this.scene.rotate(this.articulationAngle*degToRad,1,0,0);
 			this.scene.rotate(-90*degToRad,0,1,0);
 			this.coveredCylinder.display();
         this.scene.popMatrix();

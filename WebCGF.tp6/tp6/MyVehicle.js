@@ -16,9 +16,10 @@ class MyVehicle extends CGFobject
 		this.yPos = 0;
 		this.yPosDelta = 0;
 		this.zPos = 0;
-		this.zPosDelta = 0.1;
+		this.zPosDelta = 0;
 		this.angle = 90;
 		this.degToRad = Math.PI / 180;
+		this.velocityDelta = 0;
 
 		this.initBuffers();
 	};
@@ -37,10 +38,20 @@ class MyVehicle extends CGFobject
 		this.xPos+=this.xPosDelta;
 		this.yPos+=this.yPosDelta;
 		this.zPos+=this.zPosDelta;
-		this.vehicleBody.frontWheels.movingAngle += 3;
-		this.vehicleBody.backWheels.movingAngle += 3;
-		if (!(keyA || keyD))
-			this.vehicleBody.frontWheels.directionAngle=0;
+		this.vehicleBody.frontWheels.movingAngle += 3*Math.abs(this.velocityDelta)*10;
+		this.vehicleBody.backWheels.movingAngle += 3*Math.abs(this.velocityDelta)*10;
+		if (!(keyA || keyD) && (this.vehicleBody.frontWheels.directionAngle < -1 || this.vehicleBody.frontWheels.directionAngle > 1)){
+			if (this.vehicleBody.frontWheels.directionAngle > 0){
+				this.vehicleBody.frontWheels.directionAngle -= 2*(Math.abs(this.velocityDelta)/0.1);
+				this.angle += 2*(Math.abs(this.velocityDelta)/0.1);
+			}
+			else if (this.vehicleBody.frontWheels.directionAngle < 0){
+				this.vehicleBody.frontWheels.directionAngle+=2*(Math.abs(this.velocityDelta)/0.1);
+				this.angle -= 2*(Math.abs(this.velocityDelta)/0.1);
+			}
+			this.xPosDelta=-Math.abs(this.velocityDelta)*Math.cos(this.angle*this.degToRad);
+			this.zPosDelta=Math.abs(this.velocityDelta)*Math.sin(this.angle*this.degToRad);
+		}
 	}
 
 	moveBackward(keyA, keyD)
@@ -48,109 +59,47 @@ class MyVehicle extends CGFobject
 		this.xPos-=this.xPosDelta;
 		this.yPos-=this.yPosDelta;
 		this.zPos-=this.zPosDelta;
-		this.vehicleBody.frontWheels.movingAngle -= 3;
-		this.vehicleBody.backWheels.movingAngle -= 3;
-		if (!(keyA || keyD))
-			this.vehicleBody.frontWheels.directionAngle=0;
+		this.vehicleBody.frontWheels.movingAngle -= 3*Math.abs(this.velocityDelta)*10;
+		this.vehicleBody.backWheels.movingAngle -= 3*Math.abs(this.velocityDelta)*10;
+		if (!(keyA || keyD) && (this.vehicleBody.frontWheels.directionAngle < -1 || this.vehicleBody.frontWheels.directionAngle > 1)){
+			if (this.vehicleBody.frontWheels.directionAngle > 0){
+				this.vehicleBody.frontWheels.directionAngle-=2*(Math.abs(this.velocityDelta)/0.1);
+				this.angle -= 2*(Math.abs(this.velocityDelta)/0.1);
+			}
+			else if (this.vehicleBody.frontWheels.directionAngle < 0){
+				this.vehicleBody.frontWheels.directionAngle+=2*(Math.abs(this.velocityDelta)/0.1);
+				this.angle += 2*(Math.abs(this.velocityDelta)/0.1);
+			}
+			this.xPosDelta=-Math.abs(this.velocityDelta)*Math.cos(this.angle*this.degToRad);
+			this.zPosDelta=Math.abs(this.velocityDelta)*Math.sin(this.angle*this.degToRad);
+		}
 	}
 
 	moveLeft(keyW, keyS)
 	{
-		if(keyW) {
-			// if ((this.angle%360 >= 0 && this.angle%360 < 90) || ((this.angle%360 == 0 || this.angle%360 > -360) && this.angle%360 < -270)) {
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			// else if ((this.angle%360 >= 90 && this.angle%360 < 180) || (this.angle%360 > -270 && this.angle%360 < -180)) {
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			// else if ((this.angle%360 >= 180 && this.angle%360 < 270) || (this.angle%360 > -180 && this.angle%360 < -90)) {
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			// else if ((this.angle%360 >= 270 && this.angle%360 < 360) || (this.angle%360 < 0 && this.angle%360 > -90)){
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			this.xPosDelta=0.1*Math.sin(this.angle);
-			this.zPosDelta=0.1*Math.cos(this.angle);
+		if (this.velocityDelta > 0)
+			this.angle+=2*(Math.abs(this.velocityDelta)/0.1);
+		if (this.velocityDelta < 0)
+			this.angle-=2*(Math.abs(this.velocityDelta)/0.1);
 
-			this.angle+=1;
-		}
-		if (keyS) {
-			// if ((this.angle%360 >= 0 && this.angle%360 < 90) || ((this.angle%360 == 0 || this.angle%360 > -360) && this.angle%360 < -270)) {
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			// else if ((this.angle%360 >= 90 && this.angle%360 < 180) || (this.angle%360 > -270 && this.angle%360 < -180)) {
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			// else if ((this.angle%360 >= 180 && this.angle%360 < 270) || (this.angle%360 > -180 && this.angle%360 < -90)) {
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			// else if ((this.angle%360 >= 270 && this.angle%360 < 360) || (this.angle%360 < 0 && this.angle%360 > -90)){
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			this.xPosDelta=0.1*Math.sin(this.angle);
-			this.zPosDelta=0.1*Math.cos(this.angle);
+		this.xPosDelta=-Math.abs(this.velocityDelta)*Math.cos(this.angle*this.degToRad);
+		this.zPosDelta=Math.abs(this.velocityDelta)*Math.sin(this.angle*this.degToRad);
 
-			this.angle-=1;
-		}
 		if(this.vehicleBody.frontWheels.directionAngle < 25)
-			this.vehicleBody.frontWheels.directionAngle+=1;
+			this.vehicleBody.frontWheels.directionAngle+=2;
 	}
 
 	moveRight(keyW, keyS)
 	{
-		if(keyW){
-			// if ((this.angle%360 >= 0 && this.angle%360 < 90) || ((this.angle%360 == 0 || this.angle%360 > -360) && this.angle%360 < -270)) {
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			// else if ((this.angle%360 >= 90 && this.angle%360 < 180) || (this.angle%360 > -270 && this.angle%360 < -180)) {
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			// else if ((this.angle%360 >= 180 && this.angle%360 < 270) || (this.angle%360 > -180 && this.angle%360 < -90)) {
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			// else if ((this.angle%360 >= 270 && this.angle%360 < 360) || (this.angle%360 < 0 && this.angle%360 > -90)){
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			this.xPosDelta=0.1*Math.sin(this.angle);
-			this.zPosDelta=0.1*Math.cos(this.angle);
+		if (this.velocityDelta > 0)
+			this.angle-=2*(Math.abs(this.velocityDelta)/0.1);
+		if (this.velocityDelta < 0)
+			this.angle+=2*(Math.abs(this.velocityDelta)/0.1);
 
-			this.angle-=1;
-		}
-		if (keyS) {
-			// if ((this.angle%360 >= 0 && this.angle%360 < 90) || ((this.angle%360 == 0 || this.angle%360 > -360) && this.angle%360 < -270)) {
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			// else if ((this.angle%360 >= 90 && this.angle%360 < 180) || (this.angle%360 > -270 && this.angle%360 < -180)) {
-			// 	this.xPosDelta+=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			// else if ((this.angle%360 >= 180 && this.angle%360 < 270) || (this.angle%360 > -180 && this.angle%360 < -90)) {
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta-=1/900;
-			// }
-			// else if ((this.angle%360 >= 270 && this.angle%360 < 360) || (this.angle%360 < 0 && this.angle%360 > -90)){
-			// 	this.xPosDelta-=1/900;
-			// 	this.zPosDelta+=1/900;
-			// }
-			this.xPosDelta=0.1*Math.sin(this.angle);
-			this.zPosDelta=0.1*Math.cos(this.angle);
+		this.xPosDelta=-Math.abs(this.velocityDelta)*Math.cos(this.angle*this.degToRad);
+		this.zPosDelta=Math.abs(this.velocityDelta)*Math.sin(this.angle*this.degToRad);
 
-			this.angle+=1;
-		}
 		if(this.vehicleBody.frontWheels.directionAngle > -25)
-			this.vehicleBody.frontWheels.directionAngle-=1;
+			this.vehicleBody.frontWheels.directionAngle-=2;
 	}
 };

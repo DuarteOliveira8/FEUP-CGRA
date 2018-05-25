@@ -28,7 +28,6 @@ class LightingScene extends CGFscene
 		this.gl.depthFunc(this.gl.LEQUAL);
 
 		this.axis = new CGFaxis(this);
-		this.showAxis = true;
 
 		// DEFAULT MATERIAL
 		this.materialDefault = new CGFappearance(this);
@@ -65,8 +64,6 @@ class LightingScene extends CGFscene
 		this.vehicleAppearanceList.Graffiti = 1;
 		this.vehicleAppearanceList.Woody = 2;
 
-		this.currVehicleAppearance = 'Blue';
-
 		// TERRAIN MODELING
 
 		this.altimetry = [[ 20 , 30 , 20 , 40 , 50 , 60 , 30 , 20 , 10 ], 
@@ -93,6 +90,8 @@ class LightingScene extends CGFscene
 		this.light4 = true;
 		this.light5 = true;
 		this.speed = 3;
+		this.showAxis = false;
+		this.currVehicleAppearance = 'Blue';
 
 
 		this.enableTextures(true);
@@ -245,26 +244,33 @@ class LightingScene extends CGFscene
 	};
 
 	checkKeys() {
-		if (this.vehicle.xPos < -7){
-			this.vehicle.xPos = -7;
-			return;
-		}
-		if (this.vehicle.zPos < -10.5){
-			this.vehicle.zPos = -10.5;
-			return;
-		}
+		// if (this.vehicle.xPos < -7){
+		// 	this.vehicle.xPos = -7;
+		// }
+		// if (this.vehicle.zPos < -10.5){
+		// 	this.vehicle.zPos = -10.5;
+		// }
+
 		var text="Keys pressed: "; 
 		var keysPressed=false;
 		if (this.gui.isKeyPressed("KeyW")) {
-			this.vehicle.moveForward(this.gui.isKeyPressed("KeyA"), this.gui.isKeyPressed("KeyD"));
+			if (this.vehicle.velocityDelta < 0.1){
+				this.vehicle.velocityDelta += 0.01;
+				this.vehicle.xPosDelta=-Math.abs(this.vehicle.velocityDelta)*Math.cos(this.vehicle.angle*this.vehicle.degToRad);
+				this.vehicle.zPosDelta=Math.abs(this.vehicle.velocityDelta)*Math.sin(this.vehicle.angle*this.vehicle.degToRad);
+			}
 		}
 		if (this.gui.isKeyPressed("KeyS")) {
-			this.vehicle.moveBackward(this.gui.isKeyPressed("KeyA"), this.gui.isKeyPressed("KeyD"));
+			if (this.vehicle.velocityDelta > -0.1){
+				this.vehicle.velocityDelta -= 0.01;
+				this.vehicle.xPosDelta=-Math.abs(this.vehicle.velocityDelta)*Math.cos(this.vehicle.angle*this.vehicle.degToRad);
+				this.vehicle.zPosDelta=Math.abs(this.vehicle.velocityDelta)*Math.sin(this.vehicle.angle*this.vehicle.degToRad);
+			}
 		}
-		if (this.gui.isKeyPressed("KeyA")) {
+		if (this.gui.isKeyPressed("KeyA") && !this.crane.attached) {
 			this.vehicle.moveLeft(this.gui.isKeyPressed("KeyW"), this.gui.isKeyPressed("KeyS"));
 		}
-		if (this.gui.isKeyPressed("KeyD")) {
+		if (this.gui.isKeyPressed("KeyD") && !this.crane.attached) {
 			this.vehicle.moveRight(this.gui.isKeyPressed("KeyW"), this.gui.isKeyPressed("KeyS"));
 		}
 	};
@@ -286,7 +292,20 @@ class LightingScene extends CGFscene
 	};
 
 	update(){
+		if (this.altimetry[Math.round(((this.vehicle.zPos-1.5+17)*9)/32)-1][Math.round(((this.vehicle.xPos-1.5+17)*9)/32)-1] > 0){
+			if (this.vehicle.zPos < -10.2296) 
+				this.vehicle.zPos = -10.2296;
+			if (this.vehicle.xPos < -6.6889) 
+				this.vehicle.xPos = -6.6889;
+		}
+
 		this.checkKeys();
+
+		if (this.vehicle.velocityDelta > 0 && !this.crane.attached)
+			this.vehicle.moveForward(this.gui.isKeyPressed("KeyA"), this.gui.isKeyPressed("KeyD"));
+		else if (this.vehicle.velocityDelta < 0 && !this.crane.attached)
+			this.vehicle.moveBackward(this.gui.isKeyPressed("KeyA"), this.gui.isKeyPressed("KeyD"));
+
 		this.checkCrane();
 	};
 

@@ -107,6 +107,7 @@ class MyCrane extends CGFobject
 			if (this.mechanicalArm.articulationAngle <= -27) {
 				this.state = 'reset';
 				this.attached = false;
+				this.scene.vehicle.velocityDelta = 0;
 			}
 		}
 		else if (this.state == 'reset'){
