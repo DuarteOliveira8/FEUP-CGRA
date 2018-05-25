@@ -11,7 +11,7 @@ class MyRearViewMirror extends CGFobject
 		super(scene);
 
 		this.hand = new MyCylinder(this.scene, 12, 1);
-		this.cover = new MyLamp(this.scene,12,12);
+		this.cover = new MyHemisphere(this.scene,30,12);
 		this.mirror = new MyCircle(this.scene,12);
 
 		this.initBuffers();

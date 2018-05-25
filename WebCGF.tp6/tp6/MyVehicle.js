@@ -40,7 +40,7 @@ class MyVehicle extends CGFobject
 		this.zPos+=this.zPosDelta;
 		this.vehicleBody.frontWheels.movingAngle += 3*Math.abs(this.velocityDelta)*10;
 		this.vehicleBody.backWheels.movingAngle += 3*Math.abs(this.velocityDelta)*10;
-		if (!(keyA || keyD) && (this.vehicleBody.frontWheels.directionAngle < -1 || this.vehicleBody.frontWheels.directionAngle > 1)){
+		if (!(keyA || keyD) && (this.vehicleBody.frontWheels.directionAngle < -2*this.scene.FPSAdapt || this.vehicleBody.frontWheels.directionAngle > 2*this.scene.FPSAdapt)){
 			if (this.vehicleBody.frontWheels.directionAngle > 0){
 				this.vehicleBody.frontWheels.directionAngle -= 2*(Math.abs(this.velocityDelta)/0.1);
 				this.angle += 2*(Math.abs(this.velocityDelta)/0.1);
@@ -61,7 +61,7 @@ class MyVehicle extends CGFobject
 		this.zPos-=this.zPosDelta;
 		this.vehicleBody.frontWheels.movingAngle -= 3*Math.abs(this.velocityDelta)*10;
 		this.vehicleBody.backWheels.movingAngle -= 3*Math.abs(this.velocityDelta)*10;
-		if (!(keyA || keyD) && (this.vehicleBody.frontWheels.directionAngle < -1 || this.vehicleBody.frontWheels.directionAngle > 1)){
+		if (!(keyA || keyD) && (this.vehicleBody.frontWheels.directionAngle < -2*this.scene.FPSAdapt || this.vehicleBody.frontWheels.directionAngle > 2*this.scene.FPSAdapt)){
 			if (this.vehicleBody.frontWheels.directionAngle > 0){
 				this.vehicleBody.frontWheels.directionAngle-=2*(Math.abs(this.velocityDelta)/0.1);
 				this.angle -= 2*(Math.abs(this.velocityDelta)/0.1);
@@ -86,7 +86,7 @@ class MyVehicle extends CGFobject
 		this.zPosDelta=Math.abs(this.velocityDelta)*Math.sin(this.angle*this.degToRad);
 
 		if(this.vehicleBody.frontWheels.directionAngle < 25)
-			this.vehicleBody.frontWheels.directionAngle+=2;
+			this.vehicleBody.frontWheels.directionAngle+=2*(Math.abs(this.velocityDelta)/0.1);
 	}
 
 	moveRight(keyW, keyS)
@@ -100,6 +100,6 @@ class MyVehicle extends CGFobject
 		this.zPosDelta=Math.abs(this.velocityDelta)*Math.sin(this.angle*this.degToRad);
 
 		if(this.vehicleBody.frontWheels.directionAngle > -25)
-			this.vehicleBody.frontWheels.directionAngle-=2;
+			this.vehicleBody.frontWheels.directionAngle-=2*(Math.abs(this.velocityDelta)/0.1);
 	}
 };

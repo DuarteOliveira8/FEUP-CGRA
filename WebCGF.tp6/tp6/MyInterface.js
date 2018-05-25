@@ -52,6 +52,8 @@ class MyInterface extends CGFinterface {
 
 		this.gui.add(this.scene, 'showAxis');
 
+		this.gui.add(this.scene, 'showTestFigures');
+
 		this.initKeys();
 
 		return true;

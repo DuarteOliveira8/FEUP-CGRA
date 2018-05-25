@@ -1,10 +1,10 @@
 /**
- * MyObject
+ * MyHemisphere
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
 
-class MyLamp extends CGFobject
+class MyHemisphere extends CGFobject
 {
 	constructor(scene, slices, stacks, minS, maxS, minT, maxT) 
 	{
