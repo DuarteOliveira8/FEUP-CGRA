@@ -6,7 +6,7 @@
 
 class MyCylinder extends CGFobject
 {
-	constructor(scene, slices, stacks, minS, maxS, minT, maxT) 
+	constructor(scene, slices, stacks, minS, maxS, minT, maxT)
 	{
 		super(scene);
 
@@ -25,7 +25,7 @@ class MyCylinder extends CGFobject
 		this.initBuffers();
 	};
 
-	initBuffers() 
+	initBuffers()
 	{
 		// VERTICES DEFINITION
 		var degToRad = Math.PI / 180;
@@ -61,6 +61,7 @@ class MyCylinder extends CGFobject
 				this.texCoords.push(this.minS + i*incS, this.minT + j*incT);
 				this.texCoords.push(this.minS + i*incS, this.minT + (j+1)*incT);
 			}
+			// REPEATED VERTICES/NORMALS/TEXTURE COORDS DEFINITION OF THE FIRST COORDINATE OF EACH STACK
 			this.vertices.push(Math.cos(angle * degToRad), Math.sin(angle * degToRad), z);
 			this.vertices.push(Math.cos(angle * degToRad), Math.sin(angle * degToRad), z+substack);
 			this.normals.push(Math.cos(angle * degToRad), Math.sin(angle * degToRad), 0);
@@ -73,5 +74,5 @@ class MyCylinder extends CGFobject
 
 		this.initGLBuffers();
 	};
-	
+
 };

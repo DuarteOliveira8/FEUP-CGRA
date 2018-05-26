@@ -6,14 +6,13 @@
 
 class MyTrapezium extends CGFobject
 {
-	constructor(scene) 
+	constructor(scene)
 	{
 		super(scene);
-
 		this.initBuffers();
 	};
 
-	initBuffers() 
+	initBuffers()
 	{
 		this.vertices = [
 			0.3, 0.5, 0,
@@ -23,10 +22,10 @@ class MyTrapezium extends CGFobject
 		];
 
 		this.indices = [
-			3, 0, 1, 
+			3, 0, 1,
 			1, 2, 3
 		];
-			
+
 		this.primitiveType=this.scene.gl.TRIANGLES;
 
 		this.normals = [
@@ -42,7 +41,7 @@ class MyTrapezium extends CGFobject
 			0, 1,
 			1, 1
 		];
-			
+
 		this.primitiveType=this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	};

@@ -6,7 +6,7 @@
 
 class MyHemisphere extends CGFobject
 {
-	constructor(scene, slices, stacks, minS, maxS, minT, maxT) 
+	constructor(scene, slices, stacks, minS, maxS, minT, maxT)
 	{
 		super(scene);
 
@@ -25,7 +25,7 @@ class MyHemisphere extends CGFobject
 		this.initBuffers();
 	};
 
-	initBuffers() 
+	initBuffers()
 	{
 		// VERTICES DEFINITION
 		var degToRad = Math.PI / 180;
@@ -63,6 +63,8 @@ class MyHemisphere extends CGFobject
 
 				angleTeta += 360/this.slices;
 			}
+
+			// REPEATED VERTICES/NORMALS/TEXTURE COORDS DEFINITION OF THE FIRST COORDINATE OF EACH STACK
 			this.vertices.push(Math.sin(angleFi * degToRad) * Math.cos(angleTeta * degToRad), Math.sin(angleFi * degToRad) * Math.sin(angleTeta * degToRad), Math.cos(angleFi * degToRad));
 			this.vertices.push(Math.sin((angleFi+angleFiInc) * degToRad) * Math.cos(angleTeta * degToRad), Math.sin((angleFi+angleFiInc) * degToRad) * Math.sin(angleTeta * degToRad), Math.cos((angleFi+angleFiInc) * degToRad));
 			this.normals.push(Math.sin(angleFi * degToRad) * Math.cos(angleTeta * degToRad), Math.sin(angleFi * degToRad) * Math.sin(angleTeta * degToRad), Math.cos(angleFi * degToRad));
@@ -76,5 +78,5 @@ class MyHemisphere extends CGFobject
 
 		this.initGLBuffers();
 	};
-	
+
 };

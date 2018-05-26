@@ -1,14 +1,14 @@
 var degToRad = Math.PI / 180.0;
 
 
-class LightingScene extends CGFscene 
+class LightingScene extends CGFscene
 {
 	constructor()
 	{
 		super();
 	};
 
-	init(application) 
+	init(application)
 	{
 		super.init(application);
 
@@ -61,14 +61,14 @@ class LightingScene extends CGFscene
 
 		// TERRAIN MODELING
 
-		this.altimetry = [[ 20 , 30 , 20 , 40 , 50 , 60 , 30 , 20 , 10 ], 
-						  [ 10 , 15 , 10 , 0 , 0 , 0 , 0 , 0 , 0 ], 
-						  [ 40 , 20 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ], 
-						  [ 20 , 10 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ], 
-		  				  [ 30 , 15 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ], 
-	 					  [ 50 , 25 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ], 
-		  				  [ 20 , 10 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ], 
-		  				  [ 60 , 30 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ], 
+		this.altimetry = [[ 20 , 30 , 20 , 40 , 50 , 60 , 30 , 20 , 10 ],
+						  [ 10 , 15 , 10 , 0 , 0 , 0 , 0 , 0 , 0 ],
+						  [ 40 , 20 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+						  [ 20 , 10 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+		  				  [ 30 , 15 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+	 					  [ 50 , 25 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+		  				  [ 20 , 10 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+		  				  [ 60 , 30 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
 		  				  [ 70 , 35 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ]];
 
 
@@ -92,22 +92,22 @@ class LightingScene extends CGFscene
 
 		this.enableTextures(true);
 
-		this.period = 10;
-		this.FPSAdapt = (this.period/10);
+		this.period = 10; // UPDATE PERIOD IN MILISSECONDS
+		this.FPSAdapt = (this.period/10); // MULTIPLIER THAT ALLOWS THE CAR SPEED TO BE THE SAME DESPITE THE period VALUE
 
 		this.setUpdatePeriod(this.period);
-		
+
 	};
 
-	initCameras() 
+	initCameras()
 	{
 		this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 25, 45), vec3.fromValues(0, 0, 0));
 	};
 
-	initLights() 
+	initLights()
 	{
 		this.setGlobalAmbientLight(0.4,0.4,0.4, 1.0);
-		
+
 		// POSITIONS FOR FOUR LIGHTS
 		this.lights[0].setPosition(0, 6, 0, 1);
 		this.lights[0].setVisible(false); // show marker on light position (different from enabled)
@@ -117,7 +117,7 @@ class LightingScene extends CGFscene
 
 		this.lights[2].setPosition(-25, 6, 25, 1);
 		this.lights[2].setVisible(false); // show marker on light position (different from enabled)
-		
+
 		this.lights[3].setPosition(25, 6, -25, 1);
 		this.lights[3].setVisible(false); // show marker on light position (different from enabled)
 
@@ -152,7 +152,7 @@ class LightingScene extends CGFscene
 		this.lights[4].enable();
 	};
 
-	updateLights() 
+	updateLights()
 	{
 		// GUI LIGHT CONTROLLING
 		for (var i = 0; i < this.lights.length; i++)
@@ -185,7 +185,7 @@ class LightingScene extends CGFscene
 	}
 
 
-	display() 
+	display()
 	{
 		// ---- BEGIN Background, camera and axis setup
 
@@ -259,7 +259,7 @@ class LightingScene extends CGFscene
 
 	// Funtion to check key input and call all the appropriate functions
 	checkKeys() {
-		var text="Keys pressed: "; 
+		var text="Keys pressed: ";
 		var keysPressed=false;
 		if (this.gui.isKeyPressed("KeyW")) {
 			if (this.vehicle.velocityDelta < 0.1*this.FPSAdapt){
@@ -303,9 +303,9 @@ class LightingScene extends CGFscene
 	// Update function
 	update(){
 		if (this.altimetry[Math.round(((this.vehicle.zPos-1.5+17)*9)/32)-1][Math.round(((this.vehicle.xPos-1.5+17)*9)/32)-1] > 0){
-			if (this.vehicle.zPos < -10.2296) 
+			if (this.vehicle.zPos < -10.2296)
 				this.vehicle.zPos = -10.2296;
-			if (this.vehicle.xPos < -6.6889) 
+			if (this.vehicle.xPos < -6.6889)
 				this.vehicle.xPos = -6.6889;
 		}
 
@@ -319,6 +319,8 @@ class LightingScene extends CGFscene
 		this.checkCrane();
 	};
 
+	// Function that creates the different car textures (BLUE, GRAFFITI & WOODY)
+	// and stores them in the vehicleAppearances array
 	createCarWrap(numWrap) {
 		var Appearance = {};
 
@@ -332,42 +334,42 @@ class LightingScene extends CGFscene
 		Appearance.wrap = wrapAppearance;
 
 		var leftWindowAppearance = new CGFappearance(this);
-        leftWindowAppearance.setAmbient(0.4,0.4,0.4,1);
-        leftWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
-        leftWindowAppearance.setSpecular(0.5,0.5,0.5,1);
-        leftWindowAppearance.setShininess(150);
-        leftWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-        leftWindowAppearance.loadTexture("../resources/images/leftwindow"+numWrap+".png");
-        Appearance.leftWindow = leftWindowAppearance;
+    leftWindowAppearance.setAmbient(0.4,0.4,0.4,1);
+    leftWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
+    leftWindowAppearance.setSpecular(0.5,0.5,0.5,1);
+    leftWindowAppearance.setShininess(150);
+    leftWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    leftWindowAppearance.loadTexture("../resources/images/leftwindow"+numWrap+".png");
+    Appearance.leftWindow = leftWindowAppearance;
 
-        var rightWindowAppearance = new CGFappearance(this);
-        rightWindowAppearance.setAmbient(0.4,0.4,0.4,1);
-        rightWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
-        rightWindowAppearance.setSpecular(0.5,0.5,0.5,1);
-        rightWindowAppearance.setShininess(150);
-        rightWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-        rightWindowAppearance.loadTexture("../resources/images/rightwindow"+numWrap+".png");
-        Appearance.rightWindow = rightWindowAppearance;
+		var rightWindowAppearance = new CGFappearance(this);
+    rightWindowAppearance.setAmbient(0.4,0.4,0.4,1);
+    rightWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
+		rightWindowAppearance.setSpecular(0.5,0.5,0.5,1);
+		rightWindowAppearance.setShininess(150);
+    rightWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    rightWindowAppearance.loadTexture("../resources/images/rightwindow"+numWrap+".png");
+    Appearance.rightWindow = rightWindowAppearance;
 
-        var frontWindowAppearance = new CGFappearance(this);
-        frontWindowAppearance.setAmbient(0.4,0.4,0.4,1);
-        frontWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
-        frontWindowAppearance.setSpecular(0.5,0.5,0.5,1);
-        frontWindowAppearance.setShininess(150);
-        frontWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-        frontWindowAppearance.loadTexture("../resources/images/frontwindow"+numWrap+".png");
-        Appearance.frontWindow = frontWindowAppearance;
+    var frontWindowAppearance = new CGFappearance(this);
+		frontWindowAppearance.setAmbient(0.4,0.4,0.4,1);
+    frontWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
+    frontWindowAppearance.setSpecular(0.5,0.5,0.5,1);
+    frontWindowAppearance.setShininess(150);
+    frontWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    frontWindowAppearance.loadTexture("../resources/images/frontwindow"+numWrap+".png");
+    Appearance.frontWindow = frontWindowAppearance;
 
-        var backWindowAppearance = new CGFappearance(this);
-        backWindowAppearance.setAmbient(0.4,0.4,0.4,1);
-        backWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
-        backWindowAppearance.setSpecular(0.5,0.5,0.5,1);
-        backWindowAppearance.setShininess(150);
-        backWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-        backWindowAppearance.loadTexture("../resources/images/backwindow"+numWrap+".png");
-        Appearance.backWindow = backWindowAppearance;
+    var backWindowAppearance = new CGFappearance(this);
+    backWindowAppearance.setAmbient(0.4,0.4,0.4,1);
+    backWindowAppearance.setDiffuse(0.5,0.5,0.5,1);
+    backWindowAppearance.setSpecular(0.5,0.5,0.5,1);
+    backWindowAppearance.setShininess(150);
+    backWindowAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    backWindowAppearance.loadTexture("../resources/images/backwindow"+numWrap+".png");
+    Appearance.backWindow = backWindowAppearance;
 
-        var mirrorAppearance = new CGFappearance(this);
+    var mirrorAppearance = new CGFappearance(this);
 		mirrorAppearance.setAmbient(0.6,0.6,0.6,1);
 		mirrorAppearance.setDiffuse(0.6,0.6,0.6,1);
 		mirrorAppearance.setSpecular(0.5,0.5,0.5,1);

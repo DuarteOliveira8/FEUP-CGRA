@@ -6,7 +6,7 @@
 
 class MyPrism extends CGFobject
 {
-	constructor(scene, slices, stacks) 
+	constructor(scene, slices, stacks)
 	{
 		super(scene);
 
@@ -19,9 +19,8 @@ class MyPrism extends CGFobject
 		this.initBuffers();
 	};
 
-	initBuffers() 
+	initBuffers()
 	{
-		// VERTICES DEFINITION
 		var degToRad = Math.PI / 180;
 		var substack = 1/this.stacks;
 		var k = 0;
@@ -30,6 +29,7 @@ class MyPrism extends CGFobject
 		for (var j = 0; j < this.stacks; j++) {
 			k = this.slices * 4 * j;
 
+			// VERTICES DEFINITION
 			var angle = 0;
 			for (var i = 0; i < this.slices; i++) {
 				this.vertices.push(Math.cos(angle * degToRad), Math.sin(angle * degToRad), z);
@@ -65,5 +65,5 @@ class MyPrism extends CGFobject
 
 		this.initGLBuffers();
 	};
-	
+
 };

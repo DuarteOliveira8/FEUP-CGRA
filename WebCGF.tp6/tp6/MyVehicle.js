@@ -11,15 +11,15 @@ class MyVehicle extends CGFobject
 		super(scene);
 
 		this.vehicleBody = new MyVehicleBody(this.scene);
-		this.xPos = 10;
-		this.xPosDelta = 0;
-		this.yPos = 0;
-		this.yPosDelta = 0;
-		this.zPos = 0;
-		this.zPosDelta = 0;
-		this.angle = 90;
+		this.xPos = 10; // current x coordinate
+		this.xPosDelta = 0; // current x increasing value
+		this.yPos = 0; // current y coordinate
+		this.yPosDelta = 0; // current y increasing value
+		this.zPos = 0; // current z coordinate
+		this.zPosDelta = 0; // current z increasing value
+		this.angle = 90; // current angle of the car
 		this.degToRad = Math.PI / 180;
-		this.velocityDelta = 0;
+		this.velocityDelta = 0; // current velocity
 
 		this.initBuffers();
 	};
@@ -33,6 +33,7 @@ class MyVehicle extends CGFobject
 		this.scene.popMatrix();
 	};
 
+	// function that updates the coordinates/angle/velocity when the car is moving forward
 	moveForward(keyA, keyD)
 	{
 		this.xPos+=this.xPosDelta;
@@ -54,6 +55,7 @@ class MyVehicle extends CGFobject
 		}
 	}
 
+	// function that updates the coordinates/angle/velocity when the car is moving backward
 	moveBackward(keyA, keyD)
 	{
 		this.xPos-=this.xPosDelta;
@@ -75,6 +77,7 @@ class MyVehicle extends CGFobject
 		}
 	}
 
+	// function that updates the coordinates/angle/velocity when the car is moving to the left
 	moveLeft(keyW, keyS)
 	{
 		if (this.velocityDelta > 0)
@@ -89,6 +92,7 @@ class MyVehicle extends CGFobject
 			this.vehicleBody.frontWheels.directionAngle+=2*(Math.abs(this.velocityDelta)/0.1);
 	}
 
+	// function that updates the coordinates/angle/velocity when the car is moving to the right
 	moveRight(keyW, keyS)
 	{
 		if (this.velocityDelta > 0)

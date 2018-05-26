@@ -7,13 +7,14 @@
 class MyCoveredCylinder extends CGFobject
 {
 
-	constructor(scene, slices, stacks) 
+	constructor(scene, slices, stacks)
 	{
       super(scene);
 
       this.cylinder = new MyCylinder(scene, slices, stacks);
       this.circle = new MyCircle(scene, slices);
 
+			//CYLINDER'S WRAP-AROUND TEXTURE
       this.craneCylinderAppearance = new CGFappearance(this.scene);
       this.craneCylinderAppearance.setAmbient(0.6,0.6,0.6,1);
       this.craneCylinderAppearance.setDiffuse(0.6,0.6,0.6,1);
@@ -22,6 +23,7 @@ class MyCoveredCylinder extends CGFobject
       this.craneCylinderAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
       this.craneCylinderAppearance.loadTexture("../resources/images/craneCylinder.png");
 
+			//CYLINDER'S LID COVER TEXTURE
       this.craneCircleAppearance = new CGFappearance(this.scene);
       this.craneCircleAppearance.setAmbient(0.6,0.6,0.6,1);
       this.craneCircleAppearance.setDiffuse(0.6,0.6,0.6,1);
@@ -32,7 +34,7 @@ class MyCoveredCylinder extends CGFobject
   };
 
 	display()
-	{ 
+	{
       var degToRad = Math.PI / 180;
 
       this.scene.pushMatrix();
